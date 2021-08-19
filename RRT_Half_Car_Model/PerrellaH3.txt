@@ -1,0 +1,11 @@
+To avoid simplification into 2D space when finding the nearest neighbor, I added consideration for the change in rotation. The distance between the sample and the potential closest node, the difference in theta between the two system states were summed. That way, if two points are equidistant, the point that requires less rotation is selected.
+
+Additionally, I used a matlab function that wraps an input to 0-2Pi, and a simple if loop to account for a negative theta. That way all orientations are constrained to -2*pi to 2*pi. It is redundant to represent the unit circle that way, but necessary to maintain 0 to -2*pi for the trajectory simulations
+
+
+I did not solve the two point boundary value problem. Because I used matlab I was not forced to nodalize my solution, so there was a full form graph created. I simulated trajectories using the forward Euler method to solve the initial value problem (which is possible because you know the current state and the desired state of the sample).
+
+I also used simple if loops in the Euler function to constrain the linear and angular velocities.
+
+ 
+

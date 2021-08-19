@@ -1,0 +1,152 @@
+For all problems use the obstacle file called
+"obstaclesH3.txt"
+
+IMPORTANT NOTE:
+
+points in the configuration space have the form
+(x,y,theta,v,w)
+position value x is valid on the range 0 to 100
+position value y is valid on the range 0 to 100
+rotation theta goes from 0 to 2*pi
+forward velocity v goes from -5 to 5
+steering velocity w goes from -pi/2 to pi/2
+
+C-space Values outside this range are invalid
+
+The system also has the constraints:
+
+forward acceleration a = dv/dt is on the range -2 to 2
+steering acceleration gamma = dtheta/dt is on the range -pi/2 to pi/2
+
+The system dynamics model is given in lecture 13
+
+And trajectories need to be collision checked at least every delta distance with respect to obstacles.
+
+
+For each of the following problems you will turn in:
+
+1) graphical representation of the paths that were calculated 
+   moving through the workspace (including drawing obstacles).
+
+2) Text files (.csv, per path) each line is: "t_i, x_i, y_i, theta_i, v_i, w_i, a_i, gamma_i", where t_i, x_i, y_i, theta_i, are values at trajectory i start, and v_i, u_i are the controls applied from time t_i to t_(i+1) to make the robot follow trajectory i
+
+Note that the path consists of the sequence of trajectories i = 0,1, ..., n 
+
+Don't forget: you also need to include this with your code in a zip file.
+
+
+
+ALL PROBLEMS START WITH THE ROBOT STOPPED v=0, w=0
+ALL PROBLEMS MAY END WITH THE ROBOT TRAVELING AT ANY VALID v,w,theta
+ALL PROBLEMS ASSUME delta <= .5
+
+Here are the problems:
+
+----------------------
+Problem 1:
+
+start (x,y,theta):  [80,60,pi]
+goal region (x,y,radius) = [0, 0, 20]
+epsilon = 5
+
+---------------------
+
+Problem 2:
+
+start (x,y,theta):  [5,60,0]
+goal region (x,y,radius) = [100, 60, 20]
+epsilon = 10
+
+
+----------------------
+Problem 3:
+
+start (x,y,theta):  [10,90,3*pi/2]
+goal region (x,y,radius) = [100, 90, 10]
+epsilon = 5
+
+
+----------------------
+Problem 4:
+
+start (x,y,theta):  [63,80,pi/2]
+goal region (x,y,radius) = [60, 10, 10]
+epsilon = 10
+
+----------------------
+Problem 5:
+
+start (x,y,theta):  [40,40,pi/4]
+goal region (x,y,radius) = [0, 0, 20]
+epsilon = 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Modify your RRT code from H2 to use both (A and B simultaneously): (A) the dynamics of the 1/2-car like model and (B)  a robot of finite volume.
+
+These dynamics are described near the beginning of lecture 13. Here are links to them:
+
+Due: March 17, 11:59PM (one week)
+
+Upload to ELMS
+
+Each student does their own assignment.
+
+Information related to dynamics:
+
+    Use the 1/2-car like model dynamics described in lecture 13.
+    For point-wise collision checking (and drawing the path):
+        Subsample along the trajectories that you generate at a higher resolution:
+        For each edge, remember the trajectory associated with it at a resolution s.t. consecutive points are no further apart than some delta that we choose.
+        Use a delta<=0.5
+
+Information related to "finite volume" robot:
+
+    The robot will be defined by a set of points, each of these needs to be checked vs. obstacles (see lecture 15 for more info).
+    You’ll need to perform rotations and translations of the robot (point set) based on x, y, ?, assuming the center of the robot is at (x, y, ?) =(0,0,0)
+    This should be used for collision checking at ? =0.5 along each trajectory
+
+Information related to testing and turning in the assignment:
+
+    You get:
+        Your old H2 code as a starting point
+        The dynamics model described in lecture 13
+        Debug your code using the H2 problems
+        The obstacles, robots, and problems can be found here:
+            H3_obstacles.txtPreview the document
+            H3_robot.txtPreview the document
+            H3.txtPreview the document
+
+    You turn in (zip file):
+        A graphical representation of the paths that were calculated moving through the workspace (with obstacles).
+        Text files (.csv, per path) each line is: t_i, x_i, y_i, ?_i, v_i, w_i, a_i, ?_i
+            Where t_i, x_i, y_i, ?_i, are values at trajectory i start, and v_i, u_i are the controls applied from time t_i to t_(i+1) to make the robot follow i
+            Note that the path consists of the sequence of trajectories i = 0,1, ..., n
+            start = (x_0, y_0, ?_0, v_0, w_0) and we can assume:
+                x_0, y_0 are given
+                start happens at t_0
+                ?_0 = 0
+                v_0=0
+                w_0 =0
+            Similarly, goal = (x_n, y_n, ?_n, v_n, w_n) s.t.:
+                x_n, y_n are in the goal region (goal region has the same form as in H3)
+                The other values can be anything that is valid w.r.t. the system dynamics.
+        Your code
+        A one paragraph write-up describing how you dealt with the dynamic constraints (e.g., did you solve the 2P-BVD, if so then how? Otherwise, how did you implement the steering function?)
+
